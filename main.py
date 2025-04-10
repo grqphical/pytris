@@ -1,14 +1,22 @@
-import pygame
 from settings import *
+from board import GameBoard
+from score import ScorePanel
+from preview import PreviewPanel
 
 pygame.init()
 
 
 class PyTris:
+    """Main game class to handle window, clock, and rendering. Esentially the glue that holds it all together"""
+
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyTris")
+
+        self.game_board = GameBoard()
+        self.score_panel = ScorePanel()
+        self.preview_panel = PreviewPanel()
 
     def run(self):
         while True:
@@ -18,6 +26,10 @@ class PyTris:
                     return
 
             self.screen.fill(GRAY)
+
+            self.game_board.render()
+            self.score_panel.render()
+            self.preview_panel.render()
 
             pygame.display.update()
             self.clock.tick(60)
