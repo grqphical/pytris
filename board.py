@@ -8,5 +8,16 @@ class GameBoard:
         self.screen = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
         self.display_screen = pygame.display.get_surface()
 
+    def draw_grid(self):
+        for col in range(1, COLUMNS):
+            x = col * CELL_SIZE
+            pygame.draw.line(self.screen, LINE_COLOR, (x, 0), (x, GAME_HEIGHT), 1)
+
+        for row in range(1, ROWS):
+            y = row * CELL_SIZE
+            pygame.draw.line(self.screen, LINE_COLOR, (0, y), (GAME_WIDTH, y), 1)
+
     def render(self):
+        self.draw_grid()
+
         self.display_screen.blit(self.screen, (PADDING, PADDING))
