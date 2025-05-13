@@ -22,6 +22,12 @@ class Block(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft=(x, y))
 
+    def update(self):
+        x = self.position.x * CELL_SIZE
+        y = self.position.y * CELL_SIZE
+
+        self.rect = self.image.get_rect(topleft=(x, y))
+
 
 class Tetromino:
     """Organizes multiple blocks into a tetromino (ie: L, T, etc.)"""
@@ -31,3 +37,7 @@ class Tetromino:
         self.colour = TETROMINOS[shape]["colour"]
 
         self.blocks = [Block(group, pos, self.colour) for pos in self.block_positions]
+
+    def move_down(self):
+        for block in self.blocks:
+            block.position.y += 1

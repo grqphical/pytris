@@ -1,6 +1,7 @@
 from settings import *
 from tetrominos import Tetromino
 from random import choice
+from timer import Timer
 
 
 class GameBoard:
@@ -15,6 +16,19 @@ class GameBoard:
         self.initial_shape = choice(list(TETROMINOS.keys()))
         self.tetromino = Tetromino(self.initial_shape, self.sprites)
 
+        self.timers = {
+            "vertical move": Timer(UPDATE_START_SPEED, True, self.move_blocks_down)
+        }
+
+        self.timers["vertical move"].start()
+
+    def timer_update(self):
+        for timer in self.timers.values():
+            timer.update()
+
+    def move_blocks_down(self):
+        self.tetromino.move_down()
+
     def draw_grid(self):
         for col in range(1, COLUMNS):
             x = col * CELL_SIZE
@@ -25,7 +39,10 @@ class GameBoard:
             pygame.draw.line(self.screen, LINE_COLOUR, (0, y), (GAME_WIDTH, y), 1)
 
     def render(self):
+        self.timer_update()
+
         self.screen.fill(GRAY)
+        self.sprites.update()
         self.sprites.draw(self.screen)
 
         self.draw_grid()
