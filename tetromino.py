@@ -39,17 +39,8 @@ class Block(pygame.sprite.Sprite):
         return False
 
     def rotate(self, pivot_position: pygame.Vector2) -> pygame.Vector2:
-        """Rotates the block around a given pivot position
-
-        Formula:
-            distance = sqrt(self.position ^ 2 - pivot_position ^ 2)
-            rotated.x = distance.x * cos(90) - distance.y * sin(90)
-            rotated.y = distance.x * sin(90) + distance.y * cos(90)
-        """
-        distance = self.position - pivot_position
-        rotated = distance.rotate(90)
-        new_position = pivot_position + rotated
-        return new_position
+        """Rotates the block around a given pivot position"""
+        return pivot_position + (self.position - pivot_position).rotate(90)
 
     def update(self):
         """Updates the block's visual location"""
@@ -122,6 +113,17 @@ class Tetromino:
         pivot_position = self.blocks[0].position
 
         new_block_positions = [block.rotate(pivot_position) for block in self.blocks]
+
+        # check to make sure rotation doesn't go outside of board
+        for position in new_block_positions:
+            if position.x < 0 or position.x >= COLUMNS:
+                return
+
+            if self.field_data[int(position.y)][int(position.x)]:
+                return
+
+            if position.y > ROWS:
+                return
 
         for index, block in enumerate(self.blocks):
             block.position = new_block_positions[index]
