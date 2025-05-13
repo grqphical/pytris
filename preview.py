@@ -27,7 +27,7 @@ class PreviewPanel:
         self.screen.blit(shape_surface, rect)
 
     def render(self, next_shape):
-        self.screen.fill(GRAY)
+        self.screen.fill("black")
 
         self.display_piece(next_shape)
 
