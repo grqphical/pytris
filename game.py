@@ -25,8 +25,10 @@ class Game:
         self.timers["vertical move"].start()
 
     def create_new_tetromino(self):
+        self.check_finished_rows()
+
         self.tetromino = Tetromino(
-            choice(list(TETROMINOS.keys())),
+            "O",  # choice(list(TETROMINOS.keys())),
             self.sprites,
             self.create_new_tetromino,
             self.field_data,
@@ -58,6 +60,26 @@ class Game:
         for row in range(1, ROWS):
             y = row * CELL_SIZE
             pygame.draw.line(self.screen, LINE_COLOUR, (0, y), (GAME_WIDTH, y), 1)
+
+    def check_finished_rows(self):
+        delete_rows = []
+        for index, row in enumerate(self.field_data):
+            if all(row):
+                delete_rows.append(index)
+
+        if delete_rows:
+            for delete_row in delete_rows:
+                for block in self.field_data[delete_row]:
+                    block.kill()
+
+                for row in self.field_data:
+                    for block in row:
+                        if block and block.position.y < delete_row:
+                            block.position.y += 1
+
+            self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
+            for block in self.sprites:
+                self.field_data[int(block.position.y)][int(block.position.x)] = block
 
     def update_and_render(self):
         self.timer_update()
