@@ -1,5 +1,6 @@
 from settings import *
 from tetrominos import Tetromino
+from random import choice
 
 
 class GameBoard:
@@ -11,7 +12,8 @@ class GameBoard:
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
-        self.tetromino = Tetromino("T", self.sprites)
+        self.initial_shape = choice(list(TETROMINOS.keys()))
+        self.tetromino = Tetromino(self.initial_shape, self.sprites)
 
     def draw_grid(self):
         for col in range(1, COLUMNS):

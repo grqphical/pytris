@@ -15,7 +15,7 @@ class Block(pygame.sprite.Sprite):
         self.image.blit(BLOCK_SPRITE, (0, 0))
         self.image.fill(colour, special_flags=pygame.BLEND_RGB_MULT)
 
-        self.position = pygame.Vector2(position)
+        self.position = pygame.Vector2(position) + BLOCK_OFFSET
 
         x = self.position.x * CELL_SIZE
         y = self.position.y * CELL_SIZE
