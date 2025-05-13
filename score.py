@@ -9,7 +9,7 @@ class ScorePanel:
             (SIDEBAR_WIDTH, GAME_HEIGHT * SCORE_HEIGHT_FRACTION - PADDING)
         )
         self.rect = self.screen.get_rect(
-            bottomright=(WINDOW_WIDTH - PADDING, WINDOW_HEIGHT // 2 - PADDING)
+            bottomright=(WINDOW_WIDTH - PADDING, WINDOW_HEIGHT - PADDING)
         )
         self.display_screen = pygame.display.get_surface()
 

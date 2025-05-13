@@ -1,8 +1,6 @@
 from settings import *
 
-BLOCK_SPRITE = pygame.transform.scale(
-    pygame.image.load("sprites/block.png"), (CELL_SIZE, CELL_SIZE)
-)
+BLOCK_SPRITE = pygame.image.load("sprites/block.png")
 
 
 class Block(pygame.sprite.Sprite):
@@ -50,7 +48,13 @@ class Block(pygame.sprite.Sprite):
 class Tetromino:
     """Organizes multiple blocks into a tetromino (ie: L, T, etc.)"""
 
-    def __init__(self, shape, group, create_new_tetromino, field_data):
+    def __init__(
+        self,
+        shape: str,
+        group: pygame.sprite.Group,
+        create_new_tetromino,
+        field_data: list[list[int | Block]],
+    ):
         self.block_positions = TETROMINOS[shape]["shape"]
         self.colour = TETROMINOS[shape]["colour"]
         self.field_data = field_data
@@ -60,7 +64,7 @@ class Tetromino:
 
         self.create_new_tetromino = create_new_tetromino
 
-    def check_horizontal_collisions(self, direction):
+    def check_horizontal_collisions(self, direction: int):
         """Checks if the tetromino is colliding with the sides of the board or any other tetrominos"""
         collision_list = [
             block.check_horizontal_collision(
