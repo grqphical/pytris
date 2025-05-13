@@ -34,11 +34,13 @@ class Block(pygame.sprite.Sprite):
 class Tetromino:
     """Organizes multiple blocks into a tetromino (ie: L, T, etc.)"""
 
-    def __init__(self, shape, group):
+    def __init__(self, shape, group, create_new_tetromino):
         self.block_positions = TETROMINOS[shape]["shape"]
         self.colour = TETROMINOS[shape]["colour"]
 
         self.blocks = [Block(group, pos, self.colour) for pos in self.block_positions]
+
+        self.create_new_tetromino = create_new_tetromino
 
     def check_horizontal_collisions(self, direction):
         collision_list = [
@@ -56,10 +58,10 @@ class Tetromino:
 
     def move_down(self):
         if self.check_vertical_collisions():
-            return
-
-        for block in self.blocks:
-            block.position.y += 1
+            self.create_new_tetromino()
+        else:
+            for block in self.blocks:
+                block.position.y += 1
 
     def move_horizontal(self, direction: int):
         if self.check_horizontal_collisions(direction):

@@ -13,8 +13,7 @@ class Game:
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
-        self.initial_shape = choice(list(TETROMINOS.keys()))
-        self.tetromino = Tetromino(self.initial_shape, self.sprites)
+        self.create_new_tetromino()
 
         self.timers = {
             "vertical move": Timer(UPDATE_START_SPEED, True, self.move_blocks_down),
@@ -22,6 +21,11 @@ class Game:
         }
 
         self.timers["vertical move"].start()
+
+    def create_new_tetromino(self):
+        self.tetromino = Tetromino(
+            choice(list(TETROMINOS.keys())), self.sprites, self.create_new_tetromino
+        )
 
     def timer_update(self):
         for timer in self.timers.values():
