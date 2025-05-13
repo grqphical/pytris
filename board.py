@@ -11,7 +11,7 @@ class GameBoard:
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
-        self.block = Block(self.sprites)
+        self.block = Block(self.sprites, (2, 4), "blue")
 
     def draw_grid(self):
         for col in range(1, COLUMNS):
