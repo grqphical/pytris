@@ -24,6 +24,9 @@ class Block(pygame.sprite.Sprite):
         else:
             return False
 
+    def check_vertical_collision(self, y_pos):
+        return y_pos >= ROWS
+
     def update(self):
         self.rect.topleft = self.position * CELL_SIZE
 
@@ -44,7 +47,17 @@ class Tetromino:
         ]
         return True if any(collision_list) else False
 
+    def check_vertical_collisions(self):
+        collision_list = [
+            block.check_vertical_collision(int(block.position.y + 1))
+            for block in self.blocks
+        ]
+        return True if any(collision_list) else False
+
     def move_down(self):
+        if self.check_vertical_collisions():
+            return
+
         for block in self.blocks:
             block.position.y += 1
 
