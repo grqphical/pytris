@@ -13,6 +13,8 @@ class Game:
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
+        self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
+
         self.create_new_tetromino()
 
         self.timers = {
@@ -24,7 +26,10 @@ class Game:
 
     def create_new_tetromino(self):
         self.tetromino = Tetromino(
-            choice(list(TETROMINOS.keys())), self.sprites, self.create_new_tetromino
+            choice(list(TETROMINOS.keys())),
+            self.sprites,
+            self.create_new_tetromino,
+            self.field_data,
         )
 
     def timer_update(self):
