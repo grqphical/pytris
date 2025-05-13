@@ -1,5 +1,5 @@
 from settings import *
-from tetrominos import Tetromino
+from tetromino import Tetromino
 from random import choice
 from timer import Timer
 

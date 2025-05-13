@@ -18,6 +18,12 @@ class Block(pygame.sprite.Sprite):
         self.position = pygame.Vector2(position) + BLOCK_OFFSET
         self.rect = self.image.get_rect(topleft=self.position * CELL_SIZE)
 
+    def check_horizontal_collision(self, x_pos):
+        if not 0 <= x_pos < COLUMNS:
+            return True
+        else:
+            return False
+
     def update(self):
         self.rect.topleft = self.position * CELL_SIZE
 
@@ -31,10 +37,20 @@ class Tetromino:
 
         self.blocks = [Block(group, pos, self.colour) for pos in self.block_positions]
 
+    def check_horizontal_collisions(self, direction):
+        collision_list = [
+            block.check_horizontal_collision(int(block.position.x + direction))
+            for block in self.blocks
+        ]
+        return True if any(collision_list) else False
+
     def move_down(self):
         for block in self.blocks:
             block.position.y += 1
 
     def move_horizontal(self, direction: int):
+        if self.check_horizontal_collisions(direction):
+            return
+
         for block in self.blocks:
             block.position.x += direction
