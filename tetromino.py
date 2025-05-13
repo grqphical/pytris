@@ -19,6 +19,7 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=self.position * CELL_SIZE)
 
     def check_horizontal_collision(self, x_pos, field_data):
+        """Checks if the block is colliding with the sides of the board or any other blocks"""
         if not 0 <= x_pos < COLUMNS:
             return True
 
@@ -28,6 +29,7 @@ class Block(pygame.sprite.Sprite):
         return False
 
     def check_vertical_collision(self, y_pos, field_data):
+        """Checks if the block is colliding with the sides of the floor or any other blocks"""
         if y_pos >= ROWS:
             return True
 
@@ -37,6 +39,7 @@ class Block(pygame.sprite.Sprite):
         return False
 
     def update(self):
+        """Updates the block's visual location"""
         self.rect.topleft = self.position * CELL_SIZE
 
 
@@ -53,6 +56,7 @@ class Tetromino:
         self.create_new_tetromino = create_new_tetromino
 
     def check_horizontal_collisions(self, direction):
+        """Checks if the tetromino is colliding with the sides of the board or any other tetrominos"""
         collision_list = [
             block.check_horizontal_collision(
                 int(block.position.x + direction), self.field_data
@@ -62,6 +66,7 @@ class Tetromino:
         return True if any(collision_list) else False
 
     def check_vertical_collisions(self):
+        """Checks if the tetromino is colliding with the floor of the board or any other tetrominos"""
         collision_list = [
             block.check_vertical_collision(int(block.position.y + 1), self.field_data)
             for block in self.blocks
@@ -69,6 +74,7 @@ class Tetromino:
         return True if any(collision_list) else False
 
     def move_down(self):
+        """Moves the tetromino down"""
         if self.check_vertical_collisions():
             for block in self.blocks:
                 self.field_data[int(block.position.y)][int(block.position.x)] = block
@@ -85,8 +91,13 @@ class Tetromino:
                 block.position.y += 1
 
     def move_horizontal(self, direction: int):
+        """Moves the tetromino horizontally"""
         if self.check_horizontal_collisions(direction):
             return
 
         for block in self.blocks:
             block.position.x += direction
+
+    def rotate(self):
+        """Rotates the tetromino"""
+        pass
