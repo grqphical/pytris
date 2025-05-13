@@ -72,6 +72,13 @@ class Tetromino:
         if self.check_vertical_collisions():
             for block in self.blocks:
                 self.field_data[int(block.position.y)][int(block.position.x)] = block
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT]:
+                self.move_horizontal(-1)
+            if keys[pygame.K_RIGHT]:
+                self.move_horizontal(1)
+
             self.create_new_tetromino()
         else:
             for block in self.blocks:
