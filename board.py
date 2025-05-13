@@ -1,4 +1,5 @@
 from settings import *
+from tetrominos import Block
 
 
 class GameBoard:
@@ -7,8 +8,10 @@ class GameBoard:
     def __init__(self):
         self.screen = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
         self.display_screen = pygame.display.get_surface()
-
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
+        self.sprites = pygame.sprite.Group()
+
+        self.block = Block(self.sprites)
 
     def draw_grid(self):
         for col in range(1, COLUMNS):
@@ -21,6 +24,7 @@ class GameBoard:
 
     def render(self):
         self.screen.fill(GRAY)
+        self.sprites.draw(self.screen)
 
         self.draw_grid()
 
