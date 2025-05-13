@@ -55,10 +55,9 @@ class Game:
         self.get_input()
         self.sprites.update()
 
-        self.screen.fill(GRAY)
-        self.sprites.draw(self.screen)
-
+        self.screen.fill("black")
         self.draw_grid()
+        self.sprites.draw(self.screen)
 
         self.display_screen.blit(self.screen, (PADDING, PADDING))
         pygame.draw.rect(self.display_screen, LINE_COLOUR, self.rect, 2, 2)

@@ -18,6 +18,8 @@ class PyTris:
         self.score_panel = ScorePanel()
         self.preview_panel = PreviewPanel()
 
+        self.background_image = pygame.image.load("sprites/background.png")
+
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -25,7 +27,7 @@ class PyTris:
                     pygame.quit()
                     return
 
-            self.screen.fill(GRAY)
+            self.screen.blit(self.background_image, (0, 0))
 
             self.game_board.update_and_render()
             self.score_panel.render()

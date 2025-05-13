@@ -31,7 +31,7 @@ PURPLE = "#7b217f"
 CYAN = "#6cc6d9"
 ORANGE = "#f07e13"
 GRAY = "#1C1C1C"
-LINE_COLOUR = "#FFFFFF"
+LINE_COLOUR = "#1C1C1C"
 
 # shapes
 TETROMINOS = {
