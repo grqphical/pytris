@@ -27,7 +27,7 @@ class PyTris:
 
             self.screen.fill(GRAY)
 
-            self.game_board.render()
+            self.game_board.update_and_render()
             self.score_panel.render()
             self.preview_panel.render()
 

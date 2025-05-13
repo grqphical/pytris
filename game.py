@@ -17,7 +17,8 @@ class Game:
         self.tetromino = Tetromino(self.initial_shape, self.sprites)
 
         self.timers = {
-            "vertical move": Timer(UPDATE_START_SPEED, True, self.move_blocks_down)
+            "vertical move": Timer(UPDATE_START_SPEED, True, self.move_blocks_down),
+            "horizontal move": Timer(MOVE_WAIT_TIME),
         }
 
         self.timers["vertical move"].start()
@@ -29,6 +30,17 @@ class Game:
     def move_blocks_down(self):
         self.tetromino.move_down()
 
+    def get_input(self):
+        keys = pygame.key.get_pressed()
+
+        if not self.timers["horizontal move"].active:
+            if keys[pygame.K_LEFT]:
+                self.tetromino.move_horizontal(-1)
+                self.timers["horizontal move"].start()
+            if keys[pygame.K_RIGHT]:
+                self.tetromino.move_horizontal(1)
+                self.timers["horizontal move"].start()
+
     def draw_grid(self):
         for col in range(1, COLUMNS):
             x = col * CELL_SIZE
@@ -38,11 +50,12 @@ class Game:
             y = row * CELL_SIZE
             pygame.draw.line(self.screen, LINE_COLOUR, (0, y), (GAME_WIDTH, y), 1)
 
-    def render(self):
+    def update_and_render(self):
         self.timer_update()
+        self.get_input()
+        self.sprites.update()
 
         self.screen.fill(GRAY)
-        self.sprites.update()
         self.sprites.draw(self.screen)
 
         self.draw_grid()

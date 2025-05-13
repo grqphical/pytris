@@ -34,3 +34,7 @@ class Tetromino:
     def move_down(self):
         for block in self.blocks:
             block.position.y += 1
+
+    def move_horizontal(self, direction: int):
+        for block in self.blocks:
+            block.position.x += direction
