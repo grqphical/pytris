@@ -1,5 +1,5 @@
 from settings import *
-from board import GameBoard
+from game import Game
 from score import ScorePanel
 from preview import PreviewPanel
 
@@ -14,7 +14,7 @@ class PyTris:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyTris")
 
-        self.game_board = GameBoard()
+        self.game_board = Game()
         self.score_panel = ScorePanel()
         self.preview_panel = PreviewPanel()
 

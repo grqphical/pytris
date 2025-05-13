@@ -4,8 +4,8 @@ from random import choice
 from timer import Timer
 
 
-class GameBoard:
-    """Renders the grid and all other sprites for the actual tetris game"""
+class Game:
+    """Renders the grid and all other sprites for the actual tetris game. It also handles most of the game logic"""
 
     def __init__(self):
         self.screen = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
