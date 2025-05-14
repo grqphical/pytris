@@ -34,6 +34,7 @@ class Game:
             "vertical move": Timer(self.down_speed, True, self.move_blocks_down),
             "horizontal move": Timer(MOVE_WAIT_TIME),
             "rotate timer": Timer(ROTATE_WAIT_TIME),
+            "drop timer": Timer(DROP_WAIT_TIME),
         }
 
         self.timers["vertical move"].start()
@@ -107,6 +108,10 @@ class Game:
         if self.down_pressed and not keys[pygame.K_DOWN]:
             self.down_pressed = False
             self.timers["vertical move"].duration = self.down_speed
+
+        if keys[pygame.K_SPACE] and not self.timers["drop timer"].active:
+            self.tetromino.drop()
+            self.timers["drop timer"].start()
 
     def draw_grid(self):
         """Draws the lines for the grid on the game board"""

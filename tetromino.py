@@ -99,6 +99,15 @@ class Tetromino:
             for block in self.blocks:
                 block.position.y += 1
 
+    def drop(self):
+        while not self.check_vertical_collisions():
+            for block in self.blocks:
+                block.position.y += 1
+
+        for block in self.blocks:
+            self.field_data[int(block.position.y)][int(block.position.x)] = block
+        self.create_new_tetromino()
+
     def move_horizontal(self, direction: int):
         """Moves the tetromino horizontally"""
         if self.check_horizontal_collisions(direction):
