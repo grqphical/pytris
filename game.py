@@ -8,6 +8,8 @@ class Game:
     """Renders the grid and all other sprites for the actual tetris game. It also handles most of the game logic"""
 
     def __init__(self, get_next_shape, update_score):
+        pygame.mixer.init()
+
         self.screen = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
         self.display_screen = pygame.display.get_surface()
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
@@ -28,6 +30,10 @@ class Game:
         self.down_speed = UPDATE_START_SPEED
         self.down_speed_faster = self.down_speed * 0.3
         self.down_pressed = False
+
+        self.drop_sound = pygame.mixer.Sound("audio/Hit.wav")
+        self.clear_row_sound = pygame.mixer.Sound("audio/Boom.wav")
+        self.level_up_sound = pygame.mixer.Sound("audio/Pickup.wav")
 
         # store all of our timers in a dict for easy access
         self.timers = {
@@ -55,6 +61,8 @@ class Game:
             self.down_speed *= 0.75
             self.down_speed_faster = self.down_speed * 0.3
             self.timers["vertical move"].duration = self.down_speed
+
+            self.level_up_sound.play()
 
         self.update_score(self.current_score, self.current_level, self.cleared_lines)
 
@@ -112,6 +120,7 @@ class Game:
         if keys[pygame.K_SPACE] and not self.timers["drop timer"].active:
             self.tetromino.drop()
             self.timers["drop timer"].start()
+            self.drop_sound.play()
 
     def draw_grid(self):
         """Draws the lines for the grid on the game board"""
@@ -146,6 +155,8 @@ class Game:
 
             # update the score with the amount of rows deleted
             self.calculate_score(len(delete_rows))
+
+            self.clear_row_sound.play()
 
     def update_and_render(self):
         """Updates the game state and renders everything to the screen"""
