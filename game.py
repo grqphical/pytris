@@ -65,6 +65,8 @@ class Game:
             self.field_data,
         )
 
+        # check if the new tetromino collides with any other tetrominos
+        # if they do that means it's game over for the player
         if self.tetromino.check_vertical_collisions():
             self.game_over = True
 

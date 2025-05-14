@@ -2,6 +2,7 @@ from settings import *
 from game import Game
 from score import ScorePanel
 from preview import PreviewPanel
+from gameover import GameOverPopup
 
 from random import choice
 
@@ -21,6 +22,7 @@ class PyTris:
         self.game = Game(self.get_next_shape, self.update_score)
         self.score_panel = ScorePanel()
         self.preview_panel = PreviewPanel()
+        self.game_over_popup = GameOverPopup()
 
         self.background_image = pygame.image.load("sprites/background.png")
 
@@ -47,6 +49,9 @@ class PyTris:
             self.game.update_and_render()
             self.score_panel.render()
             self.preview_panel.render(self.next_shape)
+
+            if self.game.game_over:
+                self.game_over_popup.draw()
 
             pygame.display.update()
             self.clock.tick(60)
