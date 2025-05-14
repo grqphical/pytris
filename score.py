@@ -22,6 +22,31 @@ class ScorePanel:
         self.level = 1
         self.lines = 0
 
+        self.high_score_file = open("highscore.txt", "w+")
+
+        try:
+            self.high_score = int(self.high_score_file.read())
+        except:
+            self.high_score = 0
+
+    def __del__(self):
+        self.high_score_file.close()
+
+    def set_score(self, score, level, lines):
+        try:
+            self.high_score = int(self.high_score_file.read())
+        except:
+            self.high_score = 0
+
+        if score > self.high_score:
+            self.high_score = score
+            self.high_score_file.seek(0)
+            self.high_score_file.write(str(score))
+
+        self.score = score
+        self.level = level
+        self.lines = lines
+
     def display_text(self, position, text, amount):
         text_surface = self.font.render(f"{text}: {amount}", False, "white")
         text_rect = text_surface.get_rect(center=position)

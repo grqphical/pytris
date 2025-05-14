@@ -19,17 +19,12 @@ class PyTris:
 
         self.next_shape = choice(list(TETROMINOS.keys()))
 
-        self.game = Game(self.get_next_shape, self.update_score)
         self.score_panel = ScorePanel()
+        self.game = Game(self.get_next_shape, self.score_panel.set_score)
         self.preview_panel = PreviewPanel()
         self.game_over_popup = GameOverPopup()
 
         self.background_image = pygame.image.load("sprites/background.png")
-
-    def update_score(self, lines, score, level):
-        self.score_panel.lines = lines
-        self.score_panel.score = score
-        self.score_panel.level = level
 
     def get_next_shape(self):
         """Returns the next shape in queue and chooses a new shape to be next in queue"""
@@ -51,7 +46,9 @@ class PyTris:
             self.preview_panel.render(self.next_shape)
 
             if self.game.game_over:
-                self.game_over_popup.draw()
+                self.game_over_popup.draw(
+                    self.score_panel.score, self.score_panel.high_score
+                )
 
             pygame.display.update()
             self.clock.tick(60)

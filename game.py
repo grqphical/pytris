@@ -52,7 +52,7 @@ class Game:
         if self.cleared_lines // 10 > self.current_level:
             self.current_level += 1
 
-        self.update_score(self.cleared_lines, self.current_score, self.current_level)
+        self.update_score(self.current_score, self.current_level, self.cleared_lines)
 
     def create_new_tetromino(self):
         """Creates a new tetromino and clears any rows that are full"""
