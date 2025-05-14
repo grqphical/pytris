@@ -12,5 +12,11 @@ pip install pygame-ce pyinstaller Pillow > $null
 Write-Host "Building PyTris"
 pyinstaller PyTris.spec
 
+Write-Host "Copying assets..."
+Copy-Item ".\sprites" -Destination ".\dist" -Recurse
+Copy-Item ".\fonts" -Destination ".\dist" -Recurse
+Copy-Item ".\audio" -Destination ".\dist" -Recurse
+Copy-Item "icon.png" -Destination ".\dist"
+
 Write-Host ""
 Write-Host "PyTris has been built in dist/. Make sure to include all the asset folders when distributing"
