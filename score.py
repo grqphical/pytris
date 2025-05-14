@@ -22,7 +22,11 @@ class ScorePanel:
         self.level = 1
         self.lines = 0
 
-        self.high_score_file = open("highscore.txt", "w+")
+        if not path.exists("highscore.txt"):
+            with open("highscore.txt", "w") as f:
+                f.write("")
+
+        self.high_score_file = open("highscore.txt", "r+")
 
         try:
             self.high_score = int(self.high_score_file.read())
