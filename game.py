@@ -7,13 +7,14 @@ from timer import Timer
 class Game:
     """Renders the grid and all other sprites for the actual tetris game. It also handles most of the game logic"""
 
-    def __init__(self, get_next_shape):
+    def __init__(self, get_next_shape, update_score):
         self.screen = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
         self.display_screen = pygame.display.get_surface()
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
         self.get_next_shape = get_next_shape
+        self.update_score = update_score
 
         self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
 
@@ -36,6 +37,20 @@ class Game:
         }
 
         self.timers["vertical move"].start()
+
+        self.current_score = 0
+        self.current_level = 1
+        self.cleared_lines = 0
+
+    def calculate_score(self, num_lines):
+        self.cleared_lines += num_lines
+        self.current_score += SCORE_DATA[num_lines] * self.current_level
+
+        # every 10 lines is a level
+        if self.cleared_lines // 10 > self.current_level:
+            self.current_level += 1
+
+        self.update_score(self.cleared_lines, self.current_score, self.current_level)
 
     def create_new_tetromino(self):
         """Creates a new tetromino and clears any rows that are full"""
@@ -113,6 +128,9 @@ class Game:
             self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
             for block in self.sprites:
                 self.field_data[int(block.position.y)][int(block.position.x)] = block
+
+            # update the score with the amount of rows deleted
+            self.calculate_score(len(delete_rows))
 
     def update_and_render(self):
         """Updates the game state and renders everything to the screen"""
