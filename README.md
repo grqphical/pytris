@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="icon.png" alt="logo">
+</p>
+
 # pytris
 
 An open source Tetris game made with Python and Pygame
