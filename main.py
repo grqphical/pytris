@@ -17,6 +17,9 @@ class PyTris:
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("PyTris")
 
+        icon_surface = pygame.image.load("icon.png").convert_alpha()
+        pygame.display.set_icon(icon_surface)
+
         self.next_shape = choice(list(TETROMINOS.keys()))
 
         self.score_panel = ScorePanel()
