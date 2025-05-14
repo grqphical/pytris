@@ -10,4 +10,14 @@ An open source Tetris game made with Python and Pygame
 
 - [ ] Multiplayer
 
-- [ ] Themes
+## Installation
+
+Make sure you have Python 3 installed.
+
+## Windows
+
+Run `build.ps1` in PowerShell
+
+## Linux
+
+Run `build.sh` in Bash/ZSH
