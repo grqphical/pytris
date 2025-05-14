@@ -42,6 +42,8 @@ class Game:
         self.current_level = 1
         self.cleared_lines = 0
 
+        self.game_over = False
+
     def calculate_score(self, num_lines):
         self.cleared_lines += num_lines
         self.current_score += SCORE_DATA[num_lines] * self.current_level
@@ -62,6 +64,9 @@ class Game:
             self.create_new_tetromino,
             self.field_data,
         )
+
+        if self.tetromino.check_vertical_collisions():
+            self.game_over = True
 
     def timer_update(self):
         """Handles timer updates"""
@@ -134,9 +139,10 @@ class Game:
 
     def update_and_render(self):
         """Updates the game state and renders everything to the screen"""
-        self.timer_update()
-        self.get_input()
-        self.sprites.update()
+        if not self.game_over:
+            self.timer_update()
+            self.get_input()
+            self.sprites.update()
 
         self.screen.fill("black")
         self.draw_grid()
