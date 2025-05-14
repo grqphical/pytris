@@ -15,6 +15,8 @@ class Game:
         self.rect = self.screen.get_rect(topleft=(PADDING, PADDING))
         self.sprites = pygame.sprite.Group()
 
+        self.game_backdrop = pygame.image.load("sprites/game-background.png")
+
         self.get_next_shape = get_next_shape
         self.update_score = update_score
 
@@ -122,16 +124,6 @@ class Game:
             self.timers["drop timer"].start()
             self.drop_sound.play()
 
-    def draw_grid(self):
-        """Draws the lines for the grid on the game board"""
-        for col in range(1, COLUMNS):
-            x = col * CELL_SIZE
-            pygame.draw.line(self.screen, LINE_COLOUR, (x, 0), (x, GAME_HEIGHT), 1)
-
-        for row in range(1, ROWS):
-            y = row * CELL_SIZE
-            pygame.draw.line(self.screen, LINE_COLOUR, (0, y), (GAME_WIDTH, y), 1)
-
     def check_finished_rows(self):
         """Checks if any rows are full and clears them and moves every block down by one"""
         delete_rows = []
@@ -165,9 +157,7 @@ class Game:
             self.get_input()
             self.sprites.update()
 
-        self.screen.fill("black")
-        self.draw_grid()
+        self.screen.blit(self.game_backdrop, (0, 0))
         self.sprites.draw(self.screen)
 
         self.display_screen.blit(self.screen, (PADDING, PADDING))
-        pygame.draw.rect(self.display_screen, LINE_COLOUR, self.rect, 2, 2)
