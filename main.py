@@ -5,6 +5,7 @@ from preview import PreviewPanel
 from gameover import GameOverPopup
 from main_menu import *
 from settings_menu import SettingsMenu
+from multiplayer_menu import MultiplayerMenu
 
 from random import choice
 
@@ -31,6 +32,7 @@ class PyTris:
 
         self.main_menu = MainMenu(self.screen, self.change_game_state)
         self.settings_menu = SettingsMenu(self.screen, self.change_game_state, None)
+        self.multiplayer_menu = MultiplayerMenu(self.screen, self.change_game_state)
 
         self.background_image = pygame.image.load("sprites/background.png")
         self.game_state = MAIN_MENU_STATE
@@ -66,6 +68,8 @@ class PyTris:
                 self.main_menu.render_and_update()
             elif self.game_state == SETTINGS_STATE:
                 self.settings_menu.update_and_render()
+            elif self.game_state == MULTIPLAYER_MENU_STATE:
+                self.multiplayer_menu.update_and_render()
 
             pygame.display.update()
             self.clock.tick(60)

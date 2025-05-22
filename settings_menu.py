@@ -18,8 +18,8 @@ class SettingsMenu:
         self.back_button = Button(
             (WINDOW_WIDTH - 200) // 2,
             WINDOW_HEIGHT // 12 * 11,
-            200,
-            50,
+            200 + PADDING,
+            50 + PADDING,
             "Back",
             "white",
             "black",
