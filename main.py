@@ -4,6 +4,7 @@ from score import ScorePanel
 from preview import PreviewPanel
 from gameover import GameOverPopup
 from main_menu import *
+from settings_menu import SettingsMenu
 
 from random import choice
 
@@ -29,6 +30,7 @@ class PyTris:
         self.game_over_popup = GameOverPopup()
 
         self.main_menu = MainMenu(self.screen, self.change_game_state)
+        self.settings_menu = SettingsMenu(self.screen, self.change_game_state, None)
 
         self.background_image = pygame.image.load("sprites/background.png")
         self.game_state = MAIN_MENU_STATE
@@ -62,6 +64,8 @@ class PyTris:
                     )
             elif self.game_state == MAIN_MENU_STATE:
                 self.main_menu.render_and_update()
+            elif self.game_state == SETTINGS_STATE:
+                self.settings_menu.update_and_render()
 
             pygame.display.update()
             self.clock.tick(60)
