@@ -11,6 +11,38 @@ TITLE_COLOURS = [
 ]
 
 
+class Button:
+    def __init__(
+        self,
+        x,
+        y,
+        width,
+        height,
+        text,
+        text_colour,
+        background_colour,
+    ):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.font = pygame.font.Font("fonts/dos-vga-437.ttf", 60)
+        self.text_colour = text_colour
+        self.background_colour = background_colour
+
+        self.text_surface = self.font.render(text, False, text_colour)
+        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.background_colour, self.rect)
+        surface.blit(self.text_surface, self.text_rect)
+
+    def is_pressed(self):
+        mouse_buttons_pressed = pygame.mouse.get_just_pressed()
+        if mouse_buttons_pressed[0] and self.rect.collidepoint(pygame.mouse.get_pos()):
+            return True
+        else:
+            return False
+
+
 class MainMenu:
     def __init__(self, display_screen, handle_menu_button_click):
         self.screen = pygame.Surface(
@@ -21,6 +53,35 @@ class MainMenu:
         self.handle_menu_button_click = handle_menu_button_click
 
         self.title_font = pygame.font.Font("fonts/dos-vga-437.ttf", 120)
+
+        self.single_player_button = Button(
+            (WINDOW_WIDTH - 500) // 2,
+            WINDOW_HEIGHT // 12 * 4,
+            500,
+            60,
+            "Singleplayer",
+            "white",
+            "black",
+        )
+        self.multiplayer_button = Button(
+            (WINDOW_WIDTH - 500) // 2,
+            WINDOW_HEIGHT // 12 * 6,
+            500,
+            60,
+            "Multiplayer",
+            "white",
+            "black",
+        )
+
+        self.settings_button = Button(
+            (WINDOW_WIDTH - 500) // 2,
+            WINDOW_HEIGHT // 12 * 8,
+            500,
+            60,
+            "Settings",
+            "white",
+            "black",
+        )
 
     def draw_title(self):
         title_surface_size = self.title_font.size("PYTRIS")
@@ -54,5 +115,9 @@ class MainMenu:
         self.screen.fill((0, 0, 0, 0))
 
         self.draw_title()
+
+        self.single_player_button.draw(self.screen)
+        self.multiplayer_button.draw(self.screen)
+        self.settings_button.draw(self.screen)
 
         self.display_screen.blit(self.screen, (0, 0))
