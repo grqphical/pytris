@@ -69,6 +69,16 @@ class MultiplayerMenu:
             "black",
         )
 
+        self.connect_button = Button(
+            (WINDOW_WIDTH - 250) // 2,
+            WINDOW_HEIGHT // 12 * 5,
+            250 + PADDING,
+            50 + PADDING,
+            "Connect",
+            "white",
+            "black",
+        )
+
         self.ip_box = TextBox(
             (WINDOW_WIDTH - 400) // 2,
             WINDOW_HEIGHT // 12 * 4,
@@ -100,6 +110,16 @@ class MultiplayerMenu:
         self.draw_title()
 
         self.back_button.draw(self.screen)
+
+        ip_box_title_surface = self.regular_font.render(
+            "Enter server IP:", False, "white", "black"
+        )
+        self.screen.blit(
+            ip_box_title_surface,
+            ((WINDOW_WIDTH - 400) // 2, WINDOW_HEIGHT // 12 * 4 - 50),
+        )
+
         self.ip_box.draw(self.screen)
+        self.connect_button.draw(self.screen)
 
         self.display_screen.blit(self.screen, (0, 0))
