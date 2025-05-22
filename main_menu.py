@@ -10,6 +10,11 @@ TITLE_COLOURS = [
     "#f07e13",
 ]
 
+SINGLE_PLAYER_STATE = "single_player"
+MULTI_PLAYER_STATE = "multi_player"
+MAIN_MENU_STATE = "main_menu"
+SETTINGS_STATE = "settings"
+
 
 class Button:
     def __init__(
@@ -112,6 +117,13 @@ class MainMenu:
         )
 
     def render_and_update(self):
+        if self.single_player_button.is_pressed():
+            self.handle_menu_button_click(SINGLE_PLAYER_STATE)
+        elif self.multiplayer_button.is_pressed():
+            self.handle_menu_button_click(MULTI_PLAYER_STATE)
+        elif self.settings_button.is_pressed():
+            self.handle_menu_button_click(SETTINGS_STATE)
+
         self.screen.fill((0, 0, 0, 0))
 
         self.draw_title()

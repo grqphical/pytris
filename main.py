@@ -3,14 +3,11 @@ from game import Game
 from score import ScorePanel
 from preview import PreviewPanel
 from gameover import GameOverPopup
-from main_menu import MainMenu
+from main_menu import *
 
 from random import choice
 
 pygame.init()
-
-GAME_PLAY_STATE = "game"
-MAIN_MENU_STATE = "menu"
 
 
 class PyTris:
@@ -31,10 +28,13 @@ class PyTris:
         self.preview_panel = PreviewPanel()
         self.game_over_popup = GameOverPopup()
 
-        self.main_menu = MainMenu(self.screen, None)
+        self.main_menu = MainMenu(self.screen, self.change_game_state)
 
         self.background_image = pygame.image.load("sprites/background.png")
         self.game_state = MAIN_MENU_STATE
+
+    def change_game_state(self, new_state):
+        self.game_state = new_state
 
     def get_next_shape(self):
         """Returns the next shape in queue and chooses a new shape to be next in queue"""
@@ -51,7 +51,7 @@ class PyTris:
 
             self.screen.blit(self.background_image, (0, 0))
 
-            if self.game_state == GAME_PLAY_STATE:
+            if self.game_state == SINGLE_PLAYER_STATE:
                 self.game.update_and_render()
                 self.score_panel.render()
                 self.preview_panel.render(self.next_shape)
